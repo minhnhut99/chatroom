@@ -1,0 +1,74 @@
+.wrapper-modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.container-modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 220px;
+  border: 1px solid brown;
+  background-color: #ffffff;
+  border-radius: 3px;
+}
+.inner-modal header {
+  display: flex;
+  justify-content: flex-end;
+}
+.inner-modal header span {
+  display: block;
+  font-size: 25px;
+  margin-right: 3px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+.inner-modal {
+  width: 100%;
+  padding-bottom: 10px;
+}
+.content-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+.content-form form .btn-group {
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 25px;
+  margin-top: 5px;
+}
+.content-form form .btn-group button {
+  width: 60px;
+  height: 25px;
+  border-radius: 2px;
+}
+.content-form form .btn-group .cancel {
+  background-color: #d5dadf;
+}
+.content-form form .btn-group .submit {
+  background-color: #22dfdf;
+  margin-left: 10px;
+}
+.content-form form .form-item {
+  width: 90%;
+}
+.content-form form .form-item label {
+  margin-bottom: 15px;
+}
+.content-form form .form-item input {
+  width: 100%;
+  outline: none;
+}
+.content-form form .form-item textarea {
+  outline: none;
+  width: 100%;
+}

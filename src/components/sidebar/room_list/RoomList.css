@@ -1,0 +1,17 @@
+.roomlist {
+}
+.roomlist li {
+  list-style-type: none;
+  margin-left: 20px;
+}
+.roomlist h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.btn-add {
+  padding: 7px 10px;
+  background-color: #10caeb;
+  border-radius: 3px;
+  margin-left: 20px;
+  font-size: 15px;
+}

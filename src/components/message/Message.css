@@ -1,0 +1,26 @@
+.wrapper-mess {
+  margin: 15px 0;
+}
+.mess-header {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: baseline;
+}
+.mess-header h3 {
+  font-size: 15px;
+  font-weight: bold;
+}
+.mess-header p {
+  font-size: 12px;
+  color: #a7a5a5;
+}
+.mess-header .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.mess-content p {
+  font-size: 14px;
+  margin-left: 30px;
+}

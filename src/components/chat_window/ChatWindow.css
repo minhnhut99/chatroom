@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 5px;
+  border-bottom: 1px solid #cccbcb;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-left .btn-addUser {
+  margin-right: 15px;
+}
+.header-left .btn-addUser button {
+  padding: 7px 10px;
+  border-radius: 2px;
+  background-color: #2792f0;
+  font-weight: semibold;
+  margin-left: 10px;
+}
+.header-right h3 {
+  font-size: 15px;
+}
+.header-right p {
+  font-size: 12px;
+}
+.chatwindow {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #dbd6d6;
+}
+.content-chat {
+  padding-left: 20px;
+}
+.img-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.footer {
+  margin-top: auto;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.footer-form {
+  display: flex;
+  width: 100%;
+}
+.footer-form input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #cfcbcb;
+  font-size: 12px;
+}
+.footer-form .btn-send {
+  width: 150px;
+  background-color: #13bbe6;
+}
