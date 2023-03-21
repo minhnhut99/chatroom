@@ -21,15 +21,15 @@ import {
   AuthContextType,
   Member,
   Mes,
-  RoomType,
 } from "../../const/appConst";
 
 const ContentStyled = styled.div`
-  height: calc(100% - 56px);
   display: flex;
   flex-direction: column;
   padding: 11px;
+  height: calc(100% - 20px);
   justify-content: flex-end;
+  overflow-y: auto;
 `;
 
 const FormStyled = styled(Form)`
@@ -38,6 +38,7 @@ const FormStyled = styled(Form)`
   align-items: center;
   position: absolute;
   bottom: 20px;
+  width: 77%;
   left: 0;
   padding: 2px 2px 2px 0;
   border: 1px solid rgb(230, 230, 230);
@@ -55,8 +56,9 @@ const MessageListStyled = styled.div`
 `;
 
 const ChatWindow = () => {
-  const { members, isAddRoomShow, selectedRoom, setIsInviteMember } =
-    useContext<AppContextType | any>(AppContext);
+  const { members, selectedRoom, setIsInviteMember } = useContext<
+    AppContextType | any
+  >(AppContext);
   const {
     user: { uid, photoURL, displayName },
   } = useContext<AuthContextType | any>(AuthContext);
@@ -67,7 +69,6 @@ const ChatWindow = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-
   const handleOnSubmit = () => {
     addDocument("messages", {
       text: inputValue,
@@ -88,7 +89,6 @@ const ChatWindow = () => {
   );
 
   const messages = useFirestore("messages", condition);
-  console.log("message", messages);
   return (
     <div className="chatwindow">
       <header className="header">
@@ -119,16 +119,16 @@ const ChatWindow = () => {
             </Avatar.Group>
           </div>
         </div>
-        <div className="header-right">
-          <h3>Secret</h3>
-          <p>This is secret room</p>
+        <div className="header__info">
+          <p className="header__title">{selectedRoom.name}</p>
+          <span className="header__description">
+            {selectedRoom.description}
+          </span>
         </div>
       </header>
-      {/* content message  */}
-      <Message />
       <div
         style={{
-          marginTop: " auto",
+          height: "100%",
         }}
       >
         <ContentStyled>
@@ -146,22 +146,22 @@ const ChatWindow = () => {
             })}
           </MessageListStyled>
         </ContentStyled>
-        <FormStyled form={form}>
-          <Form.Item name="message">
-            <Input
-              ref={inputRef}
-              onChange={handleInputChange}
-              onPressEnter={handleOnSubmit}
-              placeholder="Enter message..."
-              bordered={false}
-              autoComplete="off"
-            />
-          </Form.Item>
-          <Button type="primary" onClick={handleOnSubmit}>
-            Send!
-          </Button>
-        </FormStyled>
       </div>
+      <FormStyled form={form}>
+        <Form.Item name="message">
+          <Input
+            ref={inputRef}
+            onChange={handleInputChange}
+            onPressEnter={handleOnSubmit}
+            placeholder="Enter message..."
+            bordered={false}
+            autoComplete="off"
+          />
+        </Form.Item>
+        <Button type="primary" onClick={handleOnSubmit}>
+          Send!
+        </Button>
+      </FormStyled>
       <InviteRoom />
       <AddRoom />
     </div>

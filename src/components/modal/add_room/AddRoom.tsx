@@ -34,12 +34,7 @@ export default function AddRoomModal() {
 
   return (
     <div>
-      <Modal
-        title="Tạo phòng"
-        open={isAddRoomShow}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
+      <Modal open={isAddRoomShow} onOk={handleOk} onCancel={handleCancel}>
         <Form form={form} layout="vertical">
           <Form.Item label="Name Room" name="name">
             <Input placeholder="Enter name room" />
