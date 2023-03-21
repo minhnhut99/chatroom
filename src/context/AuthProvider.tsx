@@ -3,8 +3,10 @@ import React, { useState, createContext, useEffect } from "react";
 import LoadingSpinner from "../components/loading_spinner/LoadingSpinner";
 import { auth } from "../firebase";
 export const AuthContext = createContext({});
-
-const AuthProvider = ({ children }: any) => {
+interface ChildrenProps {
+  children: string | JSX.Element | JSX.Element[];
+}
+const AuthProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState({});
   const navigate = useIonRouter();
   const [isLoading, setIsLoading] = useState(true);

@@ -13,8 +13,10 @@ import {
   limit,
   getDocs,
   doc,
+  onSnapshot,
   updateDoc,
   arrayUnion,
+  getDoc,
 } from "firebase/firestore";
 const DebounceSelect = ({
   fetchOptions,
@@ -24,13 +26,10 @@ const DebounceSelect = ({
 }: any) => {
   const [fetching, setFetching] = useState(false);
   const [options, setOptions] = useState([]);
-  console.log("options", options);
-  console.log("fetching", fetching);
   const debounceFetcher = useMemo(() => {
     const loadOptions = (value: any) => {
       setOptions([]);
       setFetching(true);
-
       fetchOptions(value, curMembers).then((newOptions: any) => {
         setOptions(newOptions);
         setFetching(false);
@@ -43,7 +42,7 @@ const DebounceSelect = ({
     return () => {
       setOptions([]);
     };
-  });
+  }, []);
   return (
     <Select
       labelInValue
@@ -63,25 +62,23 @@ const DebounceSelect = ({
     </Select>
   );
 };
-
-async function fetchUserList(search: string, curMembers: any) {
+const fetchUserList = async (search: any, curMembers: any) => {
+  const searchRs = search.toLowerCase();
   const q = query(
     collection(db, "users"),
-    where("keywords", "array-contains", search?.toLowerCase()),
+    // where("keywords", "array-contains", searchRs),
     orderBy("displayName"),
     limit(20)
   );
-  console.log("QQQQ", q);
-  const snapshot = await getDocs(q);
-
-  return snapshot.docs
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs
     .map((doc) => ({
       label: doc.data().displayName,
       value: doc.data().uid,
       photoURL: doc.data().photoURL,
     }))
     .filter((opt) => !curMembers.includes(opt.value));
-}
+};
 
 const InviteRoom = () => {
   const {
@@ -90,10 +87,7 @@ const InviteRoom = () => {
     selectedRoom,
     selectedRoomId,
   }: any = useContext(AppContext);
-  console.log("isInViteMemberROom", isInviteMember);
-  const {
-    user: { uid },
-  }: any = useContext(AuthContext);
+
   const [value, setValue] = useState([]);
   const [form] = Form.useForm();
   const handleOk = async () => {
@@ -101,7 +95,6 @@ const InviteRoom = () => {
     setValue([]);
 
     const roomRef = doc(collection(db, "rooms"), selectedRoomId);
-
     await updateDoc(roomRef, {
       members: arrayUnion(
         ...selectedRoom.members,
@@ -116,12 +109,10 @@ const InviteRoom = () => {
     setValue([]);
     setIsInviteMember(false);
   };
-  console.log("Valuee", value);
   return (
     <div>
       <Modal
         title="Invite user"
-        // open={isInViteMember}
         open={isInviteMember}
         onOk={handleOk}
         onCancel={handleCancel}

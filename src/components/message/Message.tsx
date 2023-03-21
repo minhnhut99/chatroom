@@ -1,19 +1,60 @@
 import React from "react";
-import Logo from "../../images/ava.avif";
-import "./Message.css";
-const Message = () => {
-  return (
-    <div className="wrapper-mess">
-      <header className="mess-header">
-        <img className="avatar" src={Logo} alt="" />
-        <h3>Grass Ottherage</h3>
-        <p>Today at 10:55 AM</p>
-      </header>
-      <div className="mess-content">
-        <p>Good morning Peter</p>
-      </div>
-    </div>
-  );
-};
+import { Avatar, Typography } from "antd";
+import styled from "styled-components";
+import { formatRelative } from "date-fns";
 
-export default Message;
+const WrapperStyled = styled.div`
+  margin-bottom: 10px;
+
+  .author {
+    margin-left: 5px;
+    font-weight: bold;
+  }
+
+  .date {
+    margin-left: 10px;
+    font-size: 11px;
+    color: #a7a7a7;
+  }
+
+  .content {
+    margin-left: 30px;
+  }
+`;
+
+function formatDate(seconds: any) {
+  let formattedDate = "";
+
+  if (seconds) {
+    formattedDate = formatRelative(new Date(seconds * 1000), new Date());
+
+    formattedDate =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+  }
+
+  return formattedDate;
+}
+
+export default function Message({
+  text,
+  displayName,
+  createdAt,
+  photoURL,
+}: any) {
+  return (
+    <WrapperStyled>
+      <div>
+        <Avatar size="small" src={photoURL}>
+          {photoURL ? "" : displayName?.charAt(0)?.toUpperCase()}
+        </Avatar>
+        <Typography.Text className="author">{displayName}</Typography.Text>
+        <Typography.Text className="date">
+          {formatDate(createdAt?.seconds)}
+        </Typography.Text>
+      </div>
+      <div>
+        <Typography.Text className="content">{text}</Typography.Text>
+      </div>
+    </WrapperStyled>
+  );
+}

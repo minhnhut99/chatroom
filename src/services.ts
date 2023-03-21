@@ -13,10 +13,10 @@ export const addDocument = (collectionName: string, data: object) =>
   });
 
 // tao keywords cho displayName, su dung cho search
-export const generateKeywords = (displayName: string) => {
+export const generateKeywords = (displayName: any) => {
   // liet ke tat cac hoan vi. vd: name = ["David", "Van", "Teo"]
   // => ["David", "Van", "Teo"], ["David", "Teo", "Van"], ["Teo", "David", "Van"],...
-  const name = displayName.split(" ").filter((word) => word);
+  const name = displayName.split(" ").filter((word: any) => word);
 
   const length = name.length;
   let flagArray: any = [];

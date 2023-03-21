@@ -1,79 +1,54 @@
-import { useContext, useState } from "react";
+import React, { useContext } from "react";
+import { Form, Modal, Input } from "antd";
 import { AppContext } from "../../../context/AppProvider";
-import { AuthContext } from "../../../context/AuthProvider";
 import { addDocument } from "../../../services";
-import "./AddRoom.css";
-const AddRoom = () => {
-  const { setIsAddRoomShow }: any = useContext(AppContext);
+import { AuthContext } from "../../../context/AuthProvider";
+import { AppContextType, AuthContextType } from "../../../const/appConst";
+
+export default function AddRoomModal() {
+  const { isAddRoomShow, setIsAddRoomShow } = useContext<AppContextType | any>(
+    AppContext
+  );
   const {
     user: { uid },
-  }: any = useContext(AuthContext);
-  const [dataForm, setDataForm] = useState<any>({
-    name: "",
-    desc: "",
-  });
-  const handleSubmit = (event: any) => {
-    event?.preventDefault();
-    addDocument("rooms", { ...dataForm, members: [uid] });
-    setDataForm({ name: "", desc: "" });
-  };
-  const handleClickCancel = () => {
+  } = useContext<AuthContextType | any>(AuthContext);
+  const [form] = Form.useForm();
+
+  const handleOk = () => {
+    // handle logic
+    // add new room to firestore
+    addDocument("rooms", { ...form.getFieldsValue(), members: [uid] });
+
+    // reset form value
+    form.resetFields();
+
     setIsAddRoomShow(false);
   };
-  const handleChangeInputValue = (event: any) => {
-    const valueInput = event.target.value;
-    setDataForm({
-      ...dataForm,
-      [event.target.name]: valueInput,
-    });
+
+  const handleCancel = () => {
+    // reset form value
+    form.resetFields();
+
+    setIsAddRoomShow(false);
   };
-  console.log("dataForm", dataForm);
+
   return (
-    <div className="wrapper-modal">
-      <div className="container-modal">
-        <div className="inner-modal">
-          <header>
-            <span onClick={() => handleClickCancel()}>X</span>
-          </header>
-          <div className="content-form">
-            <form onSubmit={(event) => handleSubmit(event)}>
-              <div className="form-item">
-                <label htmlFor="name-group">Name group:</label>
-                <input
-                  id="name-group"
-                  type="text"
-                  name="name"
-                  onChange={handleChangeInputValue}
-                />
-              </div>
-              <div className="form-item">
-                <label htmlFor="desc-group">Desc group:</label>
-                <textarea
-                  onChange={handleChangeInputValue}
-                  name="desc"
-                  id="desc-group"
-                  style={{
-                    width: "100%",
-                    height: "70px",
-                    resize: "none",
-                    outline: "none",
-                  }}
-                ></textarea>
-              </div>
-              <div className="btn-group">
-                <button className="cancel" onClick={() => handleClickCancel()}>
-                  Cancel
-                </button>
-                <button className="submit" type="submit">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+    <div>
+      <Modal
+        title="Tạo phòng"
+        open={isAddRoomShow}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item label="Name Room" name="name">
+            <Input placeholder="Enter name room" />
+          </Form.Item>
+          <Form.Item label="Desc" name="description">
+            <Input.TextArea placeholder="Enter Desc" />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
-};
-
-export default AddRoom;
+}

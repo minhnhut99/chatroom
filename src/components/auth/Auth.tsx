@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { auth } from "../../firebase";
-import { addDocument } from "../../services";
+import { addDocument, generateKeywords } from "../../services";
 const googleProvider = new GoogleAuthProvider();
 const Auth = () => {
   const handleClickLogin = async (googleProvider: any) => {
@@ -20,7 +20,7 @@ const Auth = () => {
           photoURL: result.user.photoURL,
           uid: result.user.uid,
           providerId: detail.providerId,
-          // keywords:generate
+          keywords: generateKeywords(result.user.displayName),
         });
       }
     } catch (error) {
@@ -29,7 +29,6 @@ const Auth = () => {
   };
   return (
     <IonPage>
-      <IonHeader>Chat Room</IonHeader>
       <IonContent
         style={{
           textAlign: "center",
@@ -40,7 +39,7 @@ const Auth = () => {
           style={{ marginTop: "150px", color: "black", fontSize: "13px" }}
         >
           <FcGoogle size={25} />
-          Login with Google?
+          <h6>Login with Google?</h6>
         </IonButton>
       </IonContent>
     </IonPage>

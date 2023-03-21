@@ -28,10 +28,18 @@
 }
 .chatwindow {
   width: 100%;
-  height: auto;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   border-right: 1px solid #dbd6d6;
+}
+.btn-invite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
 }
 .content-chat {
   padding-left: 20px;
@@ -41,6 +49,9 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+}
+.avatar-group {
+  margin-top: 10px;
 }
 .footer {
   margin-top: auto;

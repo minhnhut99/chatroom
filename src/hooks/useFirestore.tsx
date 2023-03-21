@@ -35,13 +35,11 @@ const useFirestore = (collectionName: string, condition: ConditionTypes) => {
           ...doc.data(),
           id: doc.id,
         }));
-        console.log("docccs", docs);
         setDocuments(docs);
       });
       return unsubscribe;
     }
   }, [collection, condition]);
-  console.log("documents", documents);
   return documents;
 };
 
